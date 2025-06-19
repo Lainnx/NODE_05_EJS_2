@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title><%= lugar %></title>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
-    <h1>Travels EJS</h1>
+    <header><h1><%= nombre %></h1></header>
+    
+    <nav>
+        <ul><!-- < % sin - o = permite ejecutar codigo js-->
+            <% travels.forEach(travel =>{ %> <!--bucle que va a dar tantas vueltas como elementos haya en el array, cerramos para poder poner codigo html en medio-->
+                <li><a href="<%= travel.ruta %>"><%= travel.lugar %></a></li>
+            <% }) %> 
+        </ul>
+    </nav>
+
+    <main>    
+        <p><%= descripcion %></p>
+        <p><%= precio %></p>
+        <img src="<%= img %>" alt="<%= lugar %>">
+    </main>
+
 </body>
 </html>
