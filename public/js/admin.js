@@ -1,7 +1,7 @@
 const sectionInsert = document.getElementById("insert")
 const sectionUpdate = document.getElementById("update")
 sectionUpdate.style.display = "none"; // por defecto estara oculto
-
+const formUpdate = document.forms["update"] //con esto tenemos el formulario entero
 
 function deleteTravel(id) {
     // console.log(id);
