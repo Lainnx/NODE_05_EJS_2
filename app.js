@@ -39,7 +39,37 @@ app.get("/admin", (req,res)=>{
     res.render("admin", {jsonData}) /* le mandamos a la plantilla admin el jsonData entero*/
 })
 
+app.post("/insert", (req, res) => {
+    // console.log(req.body);
+    let newTravel = req.body
+    if (newTravel.ruta[0] != "/") {
+        newTravel.ruta = "/"+newTravel.ruta
+    }    
+    newTravel.precio = parseFloat(newTravel.precio)
+    newTravel.id = crypto.randomUUID()
+    jsonData.push(newTravel)
+    // console.log(jsonData);
+    fs.writeFileSync(path.join(__dirname, "data", "travels.json"), JSON.stringify(jsonData, null, 2), "utf-8")
+    res.redirect("/admin")
 
+})
+
+app.delete("/delete/:id", (req, res) => {
+  const idDelete = req.params.id
+  // console.log("El id es", idDelete);
+  const newJsonData = jsonData.filter(travel => travel.id != idDelete)
+  // jsonData = newJsonData
+  // console.log(newJsonData);
+ fs.writeFileSync(path.join(__dirname, "data", "travels.json"), JSON.stringify(newJsonData, null, 2), "utf-8")
+    jsonData.length = 0
+    newJsonData.forEach( travel => {
+      jsonData.push(travel)
+    })
+    res.json({"mensaje": "elemento borrado correctamente"})
+
+  // setTimeout(() => res.json({"mensaje": "elemento borrado correctamente"}), 200)
+
+})
 
 app.listen(PORT,(req,res)=>{ /*ESTO Tiene que ir abajo del todo, así se carga en cada ruta, sino habría que poner esto a.b despues de cada ruta(get) */
     console.log(`Servidor iniciado en: http://localhost:${PORT}`);
